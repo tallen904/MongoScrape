@@ -1,7 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const cheerio = require("cheerio");
 
 const db = require("./models");
 
@@ -13,10 +12,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
 
+app.use(require('./routes'))
+
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI, {
-  useMongoClient: true
+mongoose.connect(MONGODB_URI);
+
+app.listen(PORT, function() {
+  console.log("App running on port " + PORT + "!");
 });
